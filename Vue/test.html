@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<title>
+    Vue.js 시작하기
+</title>
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <p>{{ items[0].name }}</p>
+    <p>가격 : {{ items[0].price }}</p>
+    <p>수량 : {{ items[0].quantity }}</p>
+    <p v-if="items[0].quantity > 0">합계 : {{ items[0].price * items[0].quantity }}</p>
+    <p> 필터 예제 {{ 1000 | numberWithDelimiter }} </p>
+</div>
+<button id="b-button" v-bind:title="loggedInButton" v-bind:disabled="!canBuy">구매</button>
+<script>
+    var vm = new Vue({
+        el: '#b-button',
+        data: {
+            loggedInButton: '로그인 후에 구매 가능합니다.',
+            canBuy: false
+        }
+    })
+</script>
+<script>
+
+</script>
+
+<script>
+    console.assert(typeof Vue !== 'undefined');
+    var items = [{
+        name: '연필',
+        price: 300,
+        quantity: 0
+    },
+    {
+        name: '공책',
+        price: 400,
+        quantity: 0
+    },
+    {
+        name: '지우개',
+        price: 500,
+        quantity: 0
+    }]
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            items: items
+        },
+        filters: {
+            numberWithDelimiter: function(value) {
+                if (!value) {
+                    return '0'
+                }
+                return value.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+            }
+        }
+    })
+    
+    vm.$watch(function () {
+        return this.items[0].quantity
+    }, function(quantity) {
+        console.log(quantity)
+    })
+</script>
