@@ -4,8 +4,14 @@
 </title>
 <script src="https://unpkg.com/vue@2.5.17"></script>
 
-<div id="app" :style="errorMessageStyle">
+<div id="app">
     <ul>
+        <li v-for="item in items" v-bind:key="item.name">
+            <!--{{ item.name }} 의 개수 : <input type="number" v-on:change="item.quantity = $event.target.value" v-bind:value="item.quantity" min="0">-->
+            {{ item.name }} 의 개수 : <input type="number" v-model.lazy="item.quantity" min="0">
+        </li>
+    </ul>
+    <ul :style="errorMessageStyle">
         <li v-for="item in items" v-bind:key="item.name">
             <p>{{ item.name }}</p>
             <p>가격 : {{ item.price }}</p>
@@ -15,20 +21,8 @@
     </ul>
     <p>합계(세금포함) {{ totalPrice | numberWithDelimiter }} ({{ totalPriceWithTax | numberWithDelimiter }})</p>
     <p v-show="!canBuy">{{ 1000 | numberWithDelimiter }}원 이상부터 구매 가능 </p>
+    <button v-bind:disabled="!canBuy" v-on:click="doBuy">구매</button>
 </div>
-<button id="b-button" v-bind:title="loggedInButton" v-bind:disabled="!canBuy">구매</button>
-<script>
-    var vm = new Vue({
-        el: '#b-button',
-        data: {
-            loggedInButton: '로그인 후에 구매 가능합니다.',
-            canBuy: false
-        }
-    })
-</script>
-<script>
-
-</script>
 
 <script>
     console.assert(typeof Vue !== 'undefined');
@@ -51,7 +45,8 @@
     var vm = new Vue({
         el: '#app',
         data: {
-            items: items
+            items: items,
+            loggedInButton: '로그인 후에 구매 가능합니다.',
         },
         filters: {
             numberWithDelimiter: function(value) {
@@ -85,7 +80,11 @@
                 }
             },
         },
-        
+        methods: {
+            doBuy: function() {
+                alert(this.loggedInButton);
+            }
+        },
     })
     
     vm.$watch(function () {
