@@ -9,6 +9,63 @@
     <ul id="example">
         <list-item></list-item>
     </ul>
+    <main id="main">
+        <fruits-list></fruits-list>
+    </main>
+    <script>
+        var FruitsListTitle = Vue.extend({
+            template: '<h1>과일 목록 확장</h1>'
+        })
+
+        Vue.component('fruits-list', {
+            template: `<div>
+            <fruits-list-title></fruits-list-title>
+            <fruits-list-description></fruits-list-description>
+            <fruits-list-table></fruits-list-table>
+            </div>`
+        })
+
+        /*
+        Vue.component('fruits-list-title',{
+            template: '<h1>과일 목록</h1>'
+        })
+        */
+
+        Vue.component('fruits-list-tile', FruitsListTitle)
+
+        Vue.component('fruits-list-description',{
+            template: '<p>각 계절 대표적 과일의 목록</p>'
+        })
+
+        Vue.component('fruits-list-table',{
+            template: `<table>
+                        <tr>
+                            <th>계절</th>
+                            <th>과일</th>
+                        </tr>
+                        <tr>
+                            <th>봄</th>
+                            <th>딸기</th>
+                        </tr>
+                        <tr>
+                            <th>여름</th>
+                            <th>수박</th>
+                        </tr>
+                        <tr>
+                            <th>가을</th>
+                            <th>포도</th>
+                        </tr>
+                        <tr>
+                            <th>겨울</th>
+                            <th>귤</th>
+                        </tr>
+                    </table>
+                    `
+        })
+
+        new Vue({el:"#main"})
+        //new FruitsListTitle().$mount('#fruits-list')
+    </script>
     <script>
         Vue.component('list-item', {
             template: '<li>foo {{ contents }}</li>',
