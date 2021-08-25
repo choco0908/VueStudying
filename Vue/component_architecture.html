@@ -1,0 +1,24 @@
+<page>
+    <div id="fruits-list">
+        <page-header>
+            <h1 slot="header">여름 과일</h1>
+        </page-header>
+    </div>
+    
+</page>
+
+<script>
+    var headerTemplate = `
+    <div style="color: gray;">
+        <slot name="header">부모 컴포넌트로부터 전달 받은것이 없다면 이 문장을 표시.</slot>
+    <div>
+    `
+
+    Vue.component('page-header', {
+        template: headerTemplate,
+    })
+
+    new Vue({
+        el:'#fruit-list'
+    })
+</script>
